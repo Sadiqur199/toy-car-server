@@ -83,6 +83,25 @@ async function run() {
 
     })
 
+    //update data
+    app.put('/addToy/:id',async(req,res)=>{
+      const id = req.params.id
+      const filter = {_id:new ObjectId(id)}
+      const options = {upsert: true}
+      const updatedMyToy = req.body
+      const MyToy = {
+        $set:{
+          name:updatedMyToy.name,
+          price:updatedMyToy.price,
+          quantity:updatedMyToy.quantity,
+          details:updatedMyToy.details,
+        }
+      }
+
+      const result = await AddToyCollection.updateOne(filter,MyToy,options)
+      res.send(result)
+    })
+
     //delete
     app.delete('/addToy/:id',async(req,res)=>{
       const id = req.params.id
