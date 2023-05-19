@@ -56,10 +56,23 @@ async function run() {
 
   //addToy 
   app.get('/addToy',async(req,res)=>{
-   const cursor = AddToyCollection.find()
-   const result = await cursor.toArray()
+    console.log(req.query.email)
+    let query = {}
+   if(req.query?.email){
+    query = {email:req.query.email}
+   }
+   const result = await AddToyCollection.find(query).toArray()
    res.send(result)
   })
+   
+
+app.get('/addToy/:id',async(req,res)=>{
+ const id = req.params.id;
+ const filter = {_id : new ObjectId(id)}
+const result = await AddToyCollection.findOne(filter)
+res.send(result)
+})
+
 
   app.post('/addToy',async(req,res)=>{
     const newToy = req.body
