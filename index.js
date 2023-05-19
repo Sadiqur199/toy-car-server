@@ -28,7 +28,7 @@ async function run() {
     await client.connect();
 
     const productCollection = client.db('ToyCars').collection('AllProducts')
-    const AddToy = client.db('ToyCars').collection('AddToy')
+    const AddToyCollection = client.db('ToyCars').collection('AddToy')
     // Send a ping to confirm a successful connection
 
     app.get('/products',async(req,res)=>{
@@ -39,23 +39,34 @@ async function run() {
       const result = await productCollection.find(query).toArray()
       res.send(result)
     })
+
   app.get('/products',async(req,res)=>{
      const cursor = productCollection.find()
      const result = await cursor.toArray()
      res.send(result)
   })
 
-  app.get('/products/:id',(req,res)=>{
-    const id = req.params.id
- 
-    const selectedProduct = productCollection.find(product=>product._id == id)
-    res.send(selectedProduct)
+  // app.get('/products/:id',(req,res)=>{
+  //   const id = req.params.id
+  //   const selectedProduct = productCollection.find(product=>product._id == id)
+  //   res.send(selectedProduct)
   
-  })
+  // })
+
 
   //addToy 
   app.get('/addToy',async(req,res)=>{
-    
+   const cursor = AddToyCollection.find()
+   const result = await cursor.toArray()
+   res.send(result)
+  })
+
+  app.post('/addToy',async(req,res)=>{
+    const newToy = req.body
+    // console.log(newToy)
+    const result = await AddToyCollection.insertOne(newToy)
+    res.send(result)
+
   })
 
     await client.db("admin").command({ ping: 1 });
