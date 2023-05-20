@@ -63,7 +63,7 @@ async function run() {
         query = { email: req.query.email }
       }
       const sort = req?.query?.sort === 'true' ? 1 : -1
-      const result = await AddToyCollection.find(query).sort({Price: sort}).toArray()
+      const result = await AddToyCollection.find(query).sort({price: sort}).toArray()
       res.send(result)
     })
 
