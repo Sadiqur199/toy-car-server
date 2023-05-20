@@ -62,7 +62,8 @@ async function run() {
       if (req.query?.email) {
         query = { email: req.query.email }
       }
-      const result = await AddToyCollection.find(query).toArray()
+      const sort = req?.query?.sort === 'true' ? 1 : -1
+      const result = await AddToyCollection.find(query).sort({Price: sort}).toArray()
       res.send(result)
     })
 
