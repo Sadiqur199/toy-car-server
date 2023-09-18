@@ -30,7 +30,6 @@ async function run() {
     const productCollection = client.db('ToyCars').collection('AllProducts')
     const AddToyCollection = client.db('ToyCars').collection('AddToy')
     // Send a ping to confirm a successful connection
-
     app.get('/products', async (req, res) => {
       let query = {};
       if (req.query?.CategoryName) {
